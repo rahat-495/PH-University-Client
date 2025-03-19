@@ -2,16 +2,16 @@
 import CreateAdmin from "@/pages/admin/CreateAdmin";
 import CreateFaculty from "@/pages/admin/CreateFaculty";
 import CreateStudent from "@/pages/admin/CreateStudent";
-import DashBoard from "@/pages/admin/DashBoard";
+import AdminDashBoard from "./AdminDashBoard";
 
 export const studentPaths = [
     {
         index : true ,
-        element : <DashBoard />
+        element : <AdminDashBoard />
     },
     {
         path : 'dashboard' ,
-        element : <DashBoard />
+        element : <AdminDashBoard />
     },
     {
         path : 'create-admin' ,
