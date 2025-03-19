@@ -3,8 +3,11 @@ import CreateAdmin from "@/pages/admin/CreateAdmin";
 import CreateFaculty from "@/pages/admin/CreateFaculty";
 import CreateStudent from "@/pages/admin/CreateStudent";
 import AdminDashBoard from "./AdminDashBoard";
+import { ReactNode } from "react";
 
-export const adminPathsMain = [
+type TRoute = { path: string; element: ReactNode; } ;
+
+export const adminPaths = [
     {
         name : "Dashboard" ,
         path : "/admin/dashboard" ,
@@ -32,25 +35,22 @@ export const adminPathsMain = [
     }
 ]
 
-export const adminPaths = [
-    {
-        index : true ,
-        element : <AdminDashBoard />
-    },
-    {
-        path : 'dashboard' ,
-        element : <AdminDashBoard />
-    },
-    {
-        path : 'create-admin' ,
-        element : <CreateAdmin />
-    },
-    {
-        path : 'create-faculty' ,
-        element : <CreateFaculty />
-    },
-    {
-        path : 'create-student' ,
-        element : <CreateStudent />
-    },
-]
+export const adminRoutes = adminPaths.reduce((acc : TRoute[] , item) => {
+    if(item.path && item.element){
+        acc.push({
+            path : item.path ,
+            element : item.element ,
+        })
+    }
+    
+    if(item.children){
+        item.children.forEach((child) => {
+            acc.push({
+                path : child.path ,
+                element : child.element ,
+            })
+        })
+    }
+
+    return acc
+} , [])
