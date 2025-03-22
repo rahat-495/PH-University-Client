@@ -6,7 +6,6 @@ import AdminDashBoard from "./AdminDashBoard";
 import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
-type TRoute = { path: string; element: ReactNode; } ;
 type TSidebarItem = { key : string; label : ReactNode; children ?: TSidebarItem[] } ;
 
 export const adminPaths = [
@@ -60,22 +59,3 @@ export const adminSidebarItems = adminPaths.reduce((acc : TSidebarItem[] , item)
     return acc
 } , [])
 
-export const adminRoutes = adminPaths.reduce((acc : TRoute[] , item) => {
-    if(item.path && item.element){
-        acc.push({
-            path : item.path ,
-            element : item.element ,
-        })
-    }
-    
-    if(item.children){
-        item.children.forEach((child) => {
-            acc.push({
-                path : child.path ,
-                element : child.element ,
-            })
-        })
-    }
-
-    return acc
-} , [])
