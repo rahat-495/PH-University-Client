@@ -21,12 +21,12 @@ const router = createBrowserRouter([
     {
         path : '/faculty' ,
         element : <App /> ,
-        children : facultyPaths
+        children : routesGenarator(facultyPaths) ,
     },
     {
         path : '/student' ,
         element : <App /> ,
-        children : studentPaths
+        children : routesGenarator(studentPaths) ,
     },
     {
         path : '/login' ,
