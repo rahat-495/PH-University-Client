@@ -2,7 +2,9 @@
 import { useLoginMutation } from '@/redux/features/auth/authApi';
 import { setUser } from '@/redux/features/auth/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import { verifyToken } from '@/utils/verifyTokent';
 import {useForm} from 'react-hook-form' ;
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
 
@@ -16,14 +18,16 @@ const Login = () => {
         }
     });
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data : { id : string , password : string }) => {
         const userInfo = {
             id : data.id ,
             password : data.password ,
         }
         const res = await login(userInfo).unwrap() ;
-
-        dispatch(setUser({ user : {} , token : res?.data?.accesstoken }))
+        if(res?.success){
+            dispatch(setUser({ user : verifyToken(res?.data?.accesstoken) , token : res?.data?.accesstoken })) ;
+            <Navigate to={'/'}/>
+        }
     }
 
     return (

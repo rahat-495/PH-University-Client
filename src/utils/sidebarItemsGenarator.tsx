@@ -21,7 +21,6 @@ export const sidebarItemsGenarator = (items : TUserPath[]) => {
                 }))
             })
         }
-        console.log(acc);
     
         return acc
     } , [])

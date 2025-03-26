@@ -36,12 +36,12 @@ const Sidebar = () => {
         <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            onBreakpoint={(broken) => {
-                console.log(broken);
-            }}
-            onCollapse={(collapsed, type) => {
-                console.log(collapsed, type);
-            }}
+            // onBreakpoint={(broken) => {
+            //     console.log(broken);
+            // }}
+            // onCollapse={(collapsed, type) => {
+            //     console.log(collapsed, type);
+            // }}
             >
             <div className="demo-logo-vertical h-16 flex items-center justify-center">
                 <h1 className="text-white gro font-semibold text-lg">PH - University</h1>    
