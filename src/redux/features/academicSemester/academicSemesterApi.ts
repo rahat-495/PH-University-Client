@@ -5,7 +5,7 @@ const academicSemesterApi = baseApi.injectEndpoints({
     endpoints : (builder) => ({
         getAllSemesters : builder.query({
             query : () => ({
-                url : '/academic-semesters' ,
+                url : '/academic-semesters/get-all-academic-semester' ,
                 method : "GET" ,
             })
         })
