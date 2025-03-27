@@ -1,15 +1,17 @@
 
 import { useLoginMutation } from '@/redux/features/auth/authApi';
-import { setUser } from '@/redux/features/auth/authSlice';
+import { setUser, TUser } from '@/redux/features/auth/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
 import { verifyToken } from '@/utils/verifyTokent';
-import {useForm} from 'react-hook-form' ;
-import { Navigate } from 'react-router-dom';
+import {FieldValues, useForm} from 'react-hook-form' ;
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Login = () => {
 
     const [login] = useLoginMutation() ;
     const dispatch = useAppDispatch() ;
+    const navigate = useNavigate() ;
 
     const {register , handleSubmit} = useForm({
         defaultValues : {
@@ -18,15 +20,28 @@ const Login = () => {
         }
     });
 
-    const onSubmit = async (data : { id : string , password : string }) => {
-        const userInfo = {
-            id : data.id ,
-            password : data.password ,
-        }
-        const res = await login(userInfo).unwrap() ;
-        if(res?.success){
-            dispatch(setUser({ user : verifyToken(res?.data?.accesstoken) , token : res?.data?.accesstoken })) ;
-            <Navigate to={'/'}/>
+    const onSubmit = async (data : FieldValues) => {
+        try {
+            
+            const toastId = toast.loading("Logging in")
+            
+            const userInfo = {
+                id : data.id ,
+                password : data.password ,
+            }
+
+            const res = await login(userInfo).unwrap() ;
+            const user = verifyToken(res?.data?.accesstoken) as TUser ;
+
+            if(res?.success){
+                dispatch(setUser({ user , token : res?.data?.accesstoken })) ;
+                navigate(`/${user?.role}/dashboard`) ;
+                toast.success("Logging Success Full !" , {id : toastId , duration : 2000}) ;
+            }
+
+        } catch (err) {
+            toast.error("Some thing went wrong !" , {duration : 2000})
+            console.log(err);
         }
     }
 
